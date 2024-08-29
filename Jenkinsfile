@@ -7,7 +7,7 @@ pipeline {
         GCR_PROJECT_ID = "goapptiv"
         GCR_IMAGE_NAME = "cod-order-management-service"
         GIT_CREDENTIALS_ID = 'jenkins-goapptiv-github-app'
-        REPO_URL = 'https://github.com/GoApptiv/cod-microservices-terraform-config.git'
+        REPO_URL = 'https://github.com/GoApptiv/order-management-service-laravel.git'
         BRANCH_NAME = 'load-balancing-scaling'
     }
 
