@@ -147,21 +147,9 @@ pipeline {
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
                             sh """
-                            echo "Removing old directory if it exists..."
-                            rm -rf cod-tf
-                            
-                            echo "Creating cod-tf directory..."
-                            mkdir -p cod-tf
-                        
-                            echo "Cloning or copying Terraform configuration files..."
-                            # If the Terraform files are in a Git repository:
-                            git clone https://$GITHUB_TOKEN@github.com/GoApptiv/cod-microservices-terraform-config/tree/master cod-tf
-
-                            # Or, if the files are elsewhere on the system:
-                            # cp -r /path/to/terraform/files/* cod-tf/
+                          
                         
                             echo "Initializing Terraform..."
-                            cd cod-tf
                             terraform init
                         
                             echo "Applying Terraform configuration..."
