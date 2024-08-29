@@ -118,10 +118,16 @@ pipeline {
                 script {
                     echo "Starting Checkout of Terraform Configuration"
                     try {
-                        checkout([$class: 'GitSCM', 
-                                  branches: [[name: "${TERRAFORM_BRANCH}"]],
-                                  userRemoteConfigs: [[url: "${TERRAFORM_REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
-                        ])
+                        sh """
+                        echo "Removing old directory if it exists..."
+                        rm -rf cod-tf
+                        
+                        echo "Creating cod-tf directory..."
+                        mkdir -p cod-tf
+                        
+                        echo "Cloning Terraform configuration files..."
+                        git clone https://${GIT_CREDENTIALS_ID}@github.com/GoApptiv/cod-microservices-terraform-config.git -b ${TERRAFORM_BRANCH} cod-tf
+                        """
                         echo "Terraform Configuration Checkout Completed Successfully"
                     } catch (Exception e) {
                         echo "Error during Terraform Configuration Checkout: ${e.getMessage()}"
@@ -147,15 +153,14 @@ pipeline {
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
                             sh """
-                          
-                        
                             echo "Initializing Terraform..."
+                            cd cod-tf
                             terraform init
                         
                             echo "Applying Terraform configuration..."
                             terraform apply -auto-approve -input=false \\
                                             -state=${STATE_FILE} \\
-                                            -var "github_token=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" \\
+                                            -var "github_token=${GITHUB_TOKEN}" \\
                                             -var "deployment_id=${BUILD_NUMBER}" \\
                                             -target=module.order-service
                             """
@@ -164,7 +169,6 @@ pipeline {
                             echo "Error during Terraform Apply: ${e.getMessage()}"
                             throw e
                         }
-
                     }
                 }
             }
