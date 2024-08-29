@@ -9,7 +9,7 @@ pipeline {
         GIT_CREDENTIALS_ID = 'jenkins-goapptiv-github-app'
         REPO_URL = 'https://github.com/GoApptiv/order-management-service-laravel.git'
         BRANCH_NAME = 'load-balancing-scaling'
-        TERRAFORM_REPO_URL = 'https://github.com/shailendra-singh-2024/cod-microservices-terraform-config'
+        TERRAFORM_REPO_URL = 'https://github.com/GoApptiv/cod-microservices-terraform-config'
         TERRAFORM_BRANCH = 'master'
     }
 
@@ -152,12 +152,13 @@ pipeline {
                             
                             echo "Creating cod-tf directory..."
                             mkdir -p cod-tf
+                            cd cod-tf
                             
                             echo "Cloning Terraform configuration files..."
-                            git clone https://${GIT_CREDENTIALS_ID}@github.com/shailendra-singh-2024/cod-microservices-terraform-config -b ${TERRAFORM_BRANCH} cod-tf
+                            git clone https://${GIT_CREDENTIALS_ID}@github.com/GoApptiv/cod-microservices-terraform-config -b ${TERRAFORM_BRANCH}
 
                             echo "Initializing Terraform..."
-                            cd cod-tf
+                            
                             terraform init
                         
                             echo "Applying Terraform configuration..."
