@@ -155,7 +155,7 @@ pipeline {
                         
                             echo "Cloning or copying Terraform configuration files..."
                             # If the Terraform files are in a Git repository:
-                            git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/order-microservices-terraform-config.git cod-tf
+                            git clone https://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@github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
                             
                             # Or, if the files are elsewhere on the system:
                             # cp -r /path/to/terraform/files/* cod-tf/
