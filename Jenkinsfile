@@ -2,13 +2,12 @@ pipeline {
     agent any
 
     environment {
-        
-        STATE_FILE = 'terraform/order-management.tfstate'
+        STATE_FILE = 'terraform/cod-order-management-service.tfstate'
         GCR_REGISTRY = "asia.gcr.io"
         GCR_PROJECT_ID = "goapptiv"
-        GCR_IMAGE_NAME = "order-management-laravel"
+        GCR_IMAGE_NAME = "cod-order-management-service"
         GIT_CREDENTIALS_ID = 'jenkins-goapptiv-github-app'
-        REPO_URL = 'https://github.com/GoApptiv/order-management-service-laravel.git'
+        REPO_URL = 'https://github.com/GoApptiv/cod-microservices-terraform-config.git'
         BRANCH_NAME = 'load-balancing-scaling'
     }
 
@@ -125,18 +124,13 @@ pipeline {
             steps {
                 script {
                     echo "Starting Terraform Apply"
-                    echo "Using state file: ${STATE_FILE}"
-                    echo "Using GCR registry: ${GCR_REGISTRY}"
-                    echo "Using GCR project ID: ${GCR_PROJECT_ID}"
-                    echo "Using GCR image name: ${GCR_IMAGE_NAME}"
-                    echo "Deployment ID: ${BUILD_NUMBER}"
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
                             sh """
                             echo "Removing old directory..."
                             rm -rf cod-tf
                             echo "Cloning repository..."
-                            git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
+                            git clone https://github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
                             cd cod-tf
                             echo "Checking out master branch..."
                             git checkout master
