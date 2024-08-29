@@ -12,21 +12,23 @@ pipeline {
     }
 
     stages {
-        steps {
-        script {
-            echo "Starting Checkout"
-            try {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: "${BRANCH_NAME}"]],
-                          userRemoteConfigs: [[url: "${REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
-                ])
-                echo "Checkout Completed Successfully"
-            } catch (Exception e) {
-                echo "Error during Checkout: ${e.getMessage()}"
-                error("Checkout failed")
+        stage('Checkout') {
+            steps {
+                script {
+                    echo "Starting Checkout"
+                    try {
+                        checkout([$class: 'GitSCM', 
+                                  branches: [[name: "${BRANCH_NAME}"]],
+                                  userRemoteConfigs: [[url: "${REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
+                        ])
+                        echo "Checkout Completed Successfully"
+                    } catch (Exception e) {
+                        echo "Error during Checkout: ${e.getMessage()}"
+                        error("Checkout failed")
+                    }
+                }
             }
         }
-    }
 
         stage('Global GCP Authentication') {
             steps {
