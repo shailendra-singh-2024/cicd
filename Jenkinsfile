@@ -126,6 +126,12 @@ pipeline {
                     echo "Starting Terraform Apply"
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
+                            // Print non-sensitive information
+                            echo "Using state file: ${STATE_FILE}"
+                            echo "Using GCR registry: ${GCR_REGISTRY}"
+                            echo "Using GCR project ID: ${GCR_PROJECT_ID}"
+                            echo "Using GCR image name: ${GCR_IMAGE_NAME}"
+                            echo "Deployment ID: ${BUILD_NUMBER}"
                             sh """
                             rm -rf cod-tf
                             git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
