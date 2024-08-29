@@ -128,7 +128,7 @@ pipeline {
                         try {
                             sh """
                             rm -rf cod-tf
-                            git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/order-microservices-terraform-config.git cod-tf
+                            git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
                             cd cod-tf
                             terraform init
                             terraform apply -auto-approve -input=false \\
