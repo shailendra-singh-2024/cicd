@@ -125,19 +125,24 @@ pipeline {
             steps {
                 script {
                     echo "Starting Terraform Apply"
+                    echo "Using state file: ${STATE_FILE}"
+                    echo "Using GCR registry: ${GCR_REGISTRY}"
+                    echo "Using GCR project ID: ${GCR_PROJECT_ID}"
+                    echo "Using GCR image name: ${GCR_IMAGE_NAME}"
+                    echo "Deployment ID: ${BUILD_NUMBER}"
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
-                            // Print non-sensitive information
-                            echo "Using state file: ${STATE_FILE}"
-                            echo "Using GCR registry: ${GCR_REGISTRY}"
-                            echo "Using GCR project ID: ${GCR_PROJECT_ID}"
-                            echo "Using GCR image name: ${GCR_IMAGE_NAME}"
-                            echo "Deployment ID: ${BUILD_NUMBER}"
                             sh """
+                            echo "Removing old directory..."
                             rm -rf cod-tf
+                            echo "Cloning repository..."
                             git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
                             cd cod-tf
+                            echo "Checking out master branch..."
+                            git checkout master
+                            echo "Initializing Terraform..."
                             terraform init
+                            echo "Applying Terraform configuration..."
                             terraform apply -auto-approve -input=false \\
                                             -state=${STATE_FILE} \\
                                             -var "github_token=${GITHUB_TOKEN}" \\
