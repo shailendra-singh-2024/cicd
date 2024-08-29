@@ -144,32 +144,23 @@ pipeline {
             steps {
                 script {
                     echo "Starting Terraform Apply"
-                    withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
-                        try {
-                            sh """
-                            echo "Removing old directory if it exists..."
-                            rm -rf cod-tf
-                            
-                            echo "Creating cod-tf directory..."
-                            mkdir -p cod-tf
-                            cd cod-tf
-                            
-                            echo "Cloning Terraform configuration files..."
-                            git clone https://${GIT_CREDENTIALS_ID}@github.com/GoApptiv/cod-microservices-terraform-config -b ${TERRAFORM_BRANCH}
-
-                            echo "Initializing Terraform..."
-                            
-                            terraform init
-                        
-                            echo "Applying Terraform configuration..."
-                            terraform apply -auto-approve -input=false \\
-                                            -state=${STATE_FILE} \\
-                                            -var "github_token=${GITHUB_TOKEN}" \\
-                                            -var "deployment_id=${BUILD_NUMBER}" \\
-                                            -target=module.order-service
-                            """
-                            echo "Terraform Apply Completed Successfully"
-                        } catch (Exception e) {
+            withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
+                try {
+                    dir('cod-tf') {
+                        sh """
+                        echo "Initializing Terraform..."
+                        terraform init
+                    
+                        echo "Applying Terraform configuration..."
+                        terraform apply -auto-approve -input=false \\
+                                        -state=${STATE_FILE} \\
+                                        -var "github_token=${GITHUB_TOKEN}" \\
+                                        -var "deployment_id=${BUILD_NUMBER}" \\
+                                        -target=module.order-service
+                        """
+                        echo "Terraform Apply Completed Successfully"
+                    }
+                } catch (Exception e) {
                             echo "Error during Terraform Apply: ${e.getMessage()}"
                             throw e
                         }
