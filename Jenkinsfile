@@ -122,17 +122,6 @@ pipeline {
                                   branches: [[name: "${TERRAFORM_BRANCH}"]],
                                   userRemoteConfigs: [[url: "${TERRAFORM_REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
                         ])
-                        
-                        sh """
-                        echo "Removing old directory if it exists..."
-                        rm -rf cod-tf
-                        
-                        echo "Creating cod-tf directory..."
-                        mkdir -p cod-tf
-                        
-                        echo "Cloning Terraform configuration files..."
-                        git clone https://${GIT_CREDENTIALS_ID}@github.com/shailendra-singh-2024/cod-microservices-terraform-config -b ${TERRAFORM_BRANCH} cod-tf
-                        """
                         echo "Terraform Configuration Checkout Completed Successfully"
                     } catch (Exception e) {
                         echo "Error during Terraform Configuration Checkout: ${e.getMessage()}"
@@ -158,6 +147,15 @@ pipeline {
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
                             sh """
+                            echo "Removing old directory if it exists..."
+                            rm -rf cod-tf
+                            
+                            echo "Creating cod-tf directory..."
+                            mkdir -p cod-tf
+                            
+                            echo "Cloning Terraform configuration files..."
+                            git clone https://${GIT_CREDENTIALS_ID}@github.com/shailendra-singh-2024/cod-microservices-terraform-config -b ${TERRAFORM_BRANCH} cod-tf
+
                             echo "Initializing Terraform..."
                             cd cod-tf
                             terraform init
