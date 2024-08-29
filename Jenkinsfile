@@ -9,22 +9,24 @@ pipeline {
         GIT_CREDENTIALS_ID = 'jenkins-goapptiv-github-app'
         REPO_URL = 'https://github.com/GoApptiv/order-management-service-laravel.git'
         BRANCH_NAME = 'load-balancing-scaling'
+        TERRAFORM_REPO_URL = 'https://github.com/GoApptiv/cod-microservices-terraform-config.git'
+        TERRAFORM_BRANCH = 'master'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Source Code') {
             steps {
                 script {
-                    echo "Starting Checkout"
+                    echo "Starting Checkout of Source Code"
                     try {
                         checkout([$class: 'GitSCM', 
                                   branches: [[name: "${BRANCH_NAME}"]],
                                   userRemoteConfigs: [[url: "${REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
                         ])
-                        echo "Checkout Completed Successfully"
+                        echo "Source Code Checkout Completed Successfully"
                     } catch (Exception e) {
-                        echo "Error during Checkout: ${e.getMessage()}"
-                        error("Checkout failed")
+                        echo "Error during Source Code Checkout: ${e.getMessage()}"
+                        error("Source Code Checkout failed")
                     }
                 }
             }
@@ -111,6 +113,24 @@ pipeline {
             }
         }
 
+        stage('Checkout Terraform Configuration') {
+            steps {
+                script {
+                    echo "Starting Checkout of Terraform Configuration"
+                    try {
+                        checkout([$class: 'GitSCM', 
+                                  branches: [[name: "${TERRAFORM_BRANCH}"]],
+                                  userRemoteConfigs: [[url: "${TERRAFORM_REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
+                        ])
+                        echo "Terraform Configuration Checkout Completed Successfully"
+                    } catch (Exception e) {
+                        echo "Error during Terraform Configuration Checkout: ${e.getMessage()}"
+                        error("Terraform Configuration Checkout failed")
+                    }
+                }
+            }
+        }
+
         stage('Terraform Apply') {
             environment {
                 GOOGLE_APPLICATION_CREDENTIALS = credentials('proj-goapptiv-jenkins-admin')
@@ -129,17 +149,13 @@ pipeline {
                             sh """
                             echo "Removing old directory..."
                             rm -rf cod-tf
-                            echo "Cloning repository..."
-                            git clone https://github.com/GoApptiv/cod-microservices-terraform-config.git cod-tf
-                            cd cod-tf
-                            echo "Checking out master branch..."
-                            git checkout master
                             echo "Initializing Terraform..."
+                            cd cod-tf
                             terraform init
                             echo "Applying Terraform configuration..."
                             terraform apply -auto-approve -input=false \\
                                             -state=${STATE_FILE} \\
-                                            -var "github_token=${GITHUB_TOKEN}" \\
+                                            -var "github_token=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" \\
                                             -var "deployment_id=${BUILD_NUMBER}" \\
                                             -target=module.order-service
                             """
