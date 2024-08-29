@@ -2,10 +2,11 @@ pipeline {
     agent any
 
     environment {
-        STATE_FILE = 'terraform/cod-order-management-service.tfstate'
+        
+        STATE_FILE = 'terraform/order-management.tfstate'
         GCR_REGISTRY = "asia.gcr.io"
         GCR_PROJECT_ID = "goapptiv"
-        GCR_IMAGE_NAME = "cod-order-management-service"
+        GCR_IMAGE_NAME = "order-management-laravel"
         GIT_CREDENTIALS_ID = 'jenkins-goapptiv-github-app'
         REPO_URL = 'https://github.com/GoApptiv/order-management-service-laravel.git'
         BRANCH_NAME = 'load-balancing-scaling'
