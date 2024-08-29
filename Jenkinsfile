@@ -118,6 +118,11 @@ pipeline {
                 script {
                     echo "Starting Checkout of Terraform Configuration"
                     try {
+                        checkout([$class: 'GitSCM', 
+                                  branches: [[name: "${TERRAFORM_BRANCH}"]],
+                                  userRemoteConfigs: [[url: "${TERRAFORM_REPO_URL}", credentialsId: "${GIT_CREDENTIALS_ID}"]]
+                        ])
+                        
                         sh """
                         echo "Removing old directory if it exists..."
                         rm -rf cod-tf
@@ -126,7 +131,7 @@ pipeline {
                         mkdir -p cod-tf
                         
                         echo "Cloning Terraform configuration files..."
-                        git clone https://${GIT_CREDENTIALS_ID}@github.com/GoApptiv/cod-microservices-terraform-config.git -b ${TERRAFORM_BRANCH} cod-tf
+                        git clone https://${GIT_CREDENTIALS_ID}@github.com/shailendra-singh-2024/cod-microservices-terraform-config -b ${TERRAFORM_BRANCH} cod-tf
                         """
                         echo "Terraform Configuration Checkout Completed Successfully"
                     } catch (Exception e) {
