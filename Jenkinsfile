@@ -146,29 +146,37 @@ pipeline {
                     echo "Starting Terraform Apply"
                     withCredentials([string(credentialsId: 'goapptiv-composer-github-token', variable: 'GITHUB_TOKEN')]) {
                         try {
-                                sh """
-                                echo "Removing old directory if it exists..."
-                                rm -rf cod-tf
-                                
-                                echo "Creating cod-tf directory..."
-                                mkdir -p cod-tf
+                            sh """
+                            echo "Removing old directory if it exists..."
+                            rm -rf cod-tf
                             
-                                echo "Initializing Terraform..."
-                                cd cod-tf
-                                terraform init
+                            echo "Creating cod-tf directory..."
+                            mkdir -p cod-tf
+                        
+                            echo "Cloning or copying Terraform configuration files..."
+                            # If the Terraform files are in a Git repository:
+                            git clone https://${GITHUB_TOKEN}@github.com/GoApptiv/order-microservices-terraform-config.git cod-tf
                             
-                                echo "Applying Terraform configuration..."
-                                terraform apply -auto-approve -input=false \\
-                                                -state=${STATE_FILE} \\
-                                                -var "github_token=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" \\
-                                                -var "deployment_id=${BUILD_NUMBER}" \\
-                                                -target=module.order-service
-                                """
-                                echo "Terraform Apply Completed Successfully"
+                            # Or, if the files are elsewhere on the system:
+                            # cp -r /path/to/terraform/files/* cod-tf/
+                        
+                            echo "Initializing Terraform..."
+                            cd cod-tf
+                            terraform init
+                        
+                            echo "Applying Terraform configuration..."
+                            terraform apply -auto-approve -input=false \\
+                                            -state=${STATE_FILE} \\
+                                            -var "github_token=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" \\
+                                            -var "deployment_id=${BUILD_NUMBER}" \\
+                                            -target=module.order-service
+                            """
+                            echo "Terraform Apply Completed Successfully"
                         } catch (Exception e) {
                             echo "Error during Terraform Apply: ${e.getMessage()}"
-                            error("Terraform Apply failed")
+                            throw e
                         }
+
                     }
                 }
             }
