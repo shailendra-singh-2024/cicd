@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     echo "Writing Secret File"
-                    withCredentials([file(credentialsId: 'order-management-service-laravel-env', variable: 'SECRET_FILE_PATH')]) {
+                    withCredentials([file(credentialsId: 'cod-order-management-service-laravel-env', variable: 'SECRET_FILE_PATH')]) {
                         try {
                             writeFile file: '.env', text: readFile(SECRET_FILE_PATH)
                             echo "Secret File Written Successfully"
