@@ -9,7 +9,7 @@ pipeline {
         GIT_CREDENTIALS_ID = 'jenkins-goapptiv-github-app'
         REPO_URL = 'https://github.com/GoApptiv/order-management-service-laravel.git'
         BRANCH_NAME = 'load-balancing-scaling'
-        TERRAFORM_REPO_URL = 'https://github.com/GoApptiv/cod-microservices-terraform-config.git'
+        TERRAFORM_REPO_URL = 'https://github.com/shailendra-singh-2024/cod-microservices-terraform-config'
         TERRAFORM_BRANCH = 'master'
     }
 
