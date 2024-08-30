@@ -1,0 +1,132 @@
+
+APP_NAME=cod-order-staging
+APP_ENV=local
+APP_KEY=base64:WXS20qECviTzFxv0XOi67Qrf76QUIpxOka97ziM3mNQ=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+
+# Database Configuration
+DB_CONNECTION=mysql
+DB_HOST=35.200.148.15
+DB_PORT=3306
+DB_DATABASE=order_mng
+DB_USERNAME=root
+DB_PASSWORD=Bj@lJ-EGpMHFss7<
+
+# Product Database Configuration
+PRODUCT_DB_HOST=35.200.148.15
+PRODUCT_DB_PORT=3306
+PRODUCT_DB_DATABASE=product_mng
+PRODUCT_DB_USERNAME=root
+PRODUCT_DB_PASSWORD=Bj@lJ-EGpMHFss7<
+
+# Communication Database Configuration
+COMMUNICATION_DB_HOST=35.200.148.15
+COMMUNICATION_DB_PORT=3306
+COMMUNICATION_DB_DATABASE=order_communication
+COMMUNICATION_DB_USERNAME=root
+COMMUNICATION_DB_PASSWORD=Bj@lJ-EGpMHFss7<
+
+# Messaging Queue Topics
+MQ_TOPIC_NEW_ORDER=NewOrder1
+MQ_TOPIC_ORDER_CREATED=OrderCreated1
+MQ_TOPIC_NEW_ORDER_SUBSCRIPTION=CodCfaNewOrderConsumer1
+MQ_TOPIC_ORDER_STATUS=OrderStatusUpdates1
+MQ_TOPIC_ORDER_STATUS_SUBSCRIPTION=OrderMngOrderStatusConsumer1
+MQ_TOPIC_CONNECT_CREATED=ConnectRequestCreated1
+MQ_TOPIC_HEADQUARTER_ORDER_PENDING=HeadquarterPendingOrder1
+MQ_TOPIC_HEADQUARTER_ORDER_FIELD_PENDING=HeadquarterFieldPendingOrder1
+MQ_TOPIC_SUBSCRIPTION_COMMUNICATION=order-subscription-updates1
+
+# Caching, Queue, and Session Configuration
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+QUEUE_CONNECTION=database
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+# Redis Configuration
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+# Mail Configuration
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+
+# AWS Configuration
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+
+# Pusher Configuration
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+# Token and Authorization
+TOKEN_SECRET_KEY=inthebeginning
+TOKEN_ENCRYPTION_METHOD=aes-256-cbc
+
+AUTH_HEADER=Ga-Authorization
+GA_PRODUCT_HEADER=Ga-Product
+
+# User Service
+USER_SERVICE_API_ENDPOINT=http://stage-auth.connectod.com
+USER_SERVICE_V1_API=http://stage-auth.connectod.com/api/v1
+USER_SERVICE_AUTH_TOKEN=eyJhbGciOiJNRDUiLCJ0eXBlIjoiSldUIn0=.eyJ1c2VyX2lkIjoyNzI3LCJoZWFkcXVhcnRlcl9jb2RlIjoiMToyOjQ6MjI6NDkyIiwiaGVhZHF1YXJ0ZXJfaWQiOjQ5Miwicm9sZSI6IkRPQ1RPUiIsInJvbGVfaWQiOjJ9.7668c0f6a
+
+# Doctor Service
+DOCTOR_SERVICE_API_ENDPOINT=http://stage-doctor.connectod.com
+DOCTOR_SERVICE_V1_API=http://stage-doctor.connectod.com/api/v1
+
+# Order Service
+ORDER_SERVICE_BASE_URL=http://stage-order.connectod.com/
+ORDER_SERVICE_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJjcGFpc2EiLCJpc19hZG1pbiI6dHJ1ZX0.CUGogB3Umn4_sFe3z-U6rxqOhBnLN_mYbR2nFk_px4w"
+
+EXTERNAL_ORDER_SERVICE_API_BASEURL=http://orders-staging.goapptiv.com/api/v1
+EXTERNAL_ORDER_SERVICE_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJjb2QiLCJpc19hZG1pbiI6dHJ1ZX0.kT7b_LPClY3USFV51FoeAcYXGh340uU2CfZ8zWEQvIg"
+AUTHORIZATION_HEADER=Authorization
+
+# Fulfillment Service
+FULFILLMENT_SERVICE_BASE_URL=http://fulfillment-staging.goapptiv.com/fulfillment/api/v1
+FULFILLMENT_SERVICE_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJjcGFpc2EiLCJpc19hZG1pbiI6InRydWUifQ.YeCL5huovLUWvXkYAd642vpyvo14wbfMpYS-lsGYYpU"
+FULLFILMENT_SERVICE_AUTH_HEADER=Authorization
+
+# Communication Service
+COMMUNICATION_END_POINT_V1=http://34.93.1.192/communication/api/v1
+COMMUNICATION_PROJECT_ID=COD-ORDER
+
+# Slack Webhook for Exception Logging
+EXCEPTION_LOG_SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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1
+
+# Google Cloud Configuration
+GOOGLE_PROJECT_ID=cod-doctor-wall
+GOOGLE_APPLICATION_CREDENTIALS=/var/www/html/cod-doctor-wall-logging.json
+
+# SMS API Key
+SMS_API_KEY=ObTwwBORzaI-XuaYU5fli1TY1kOr9b09xEeH1WvBHi
+
+# Email Configuration
+COD_FROM_EMAIL="connectod@goapptiv.com"
+
+# Application Code
+APP_CODE=COD
+
+# Product Service
+PRODUCT_SERVICE_BASE_URL=https://product-management-nestjs-staging-rek3spohpa-el.a.run.app/
+PRODUCT_SERVICE_APPLICATION_TOKEN="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im9uZWdvYXBwdGl2X3Byb2RtZ210In0.eyJ1c2VybmFtZSI6IkNQQUlTQSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2NDg3NjY5Nn0.Dg7K638PUBeP0rxNGJkFojL9MFX69-oQs7b29w"
+
+# Therapy Token
+THERAPY_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im9uZWdvYXBwdGl2X3Byb2RtZ210In0.eyJ1c2VybmFtZSI6IkNQQUlTQSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2NDg3NjY5Nn0.Dg7K638PUBeP0rxNGJkFojL9MFX69-oQs7b29w"
