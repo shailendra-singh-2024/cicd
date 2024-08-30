@@ -135,7 +135,7 @@ pipeline {
                                             -state=${STATE_FILE} \\
                                             -var "github_token=${GITHUB_TOKEN}" \\
                                             -var "deployment_id=${BUILD_NUMBER}" \\
-                                            -target=module.order-service
+                                            -target=module.user-service
                             """
                             echo "Terraform Apply Completed Successfully"
                         } catch (Exception e) {
